@@ -1,0 +1,84 @@
+# ===========================
+# Unity .gitignore for M3AnimatedSeries
+# Only track M3 project files, not third-party assets
+# ===========================
+
+# Unity generated
+/[Ll]ibrary/
+/[Tt]emp/
+/[Oo]bj/
+/[Bb]uild/
+/[Bb]uilds/
+/[Ll]ogs/
+/[Uu]ser[Ss]ettings/
+/[Mm]emoryCaptures/
+/[Rr]ecordings/
+
+# IDE
+.vs/
+*.csproj
+*.sln
+*.suo
+*.tmp
+*.user
+*.userprefs
+*.pidb
+*.booproj
+*.svd
+*.pdb
+*.mdb
+*.opendb
+*.VC.db
+
+# OS
+Thumbs.db
+.DS_Store
+
+# Crashlytics
+crashlytics-build.properties
+sysinfo.txt
+
+# ===========================
+# Third-party asset exclusion
+# Ignore everything in Assets/ by default, then whitelist M3
+# ===========================
+
+# Ignore all Assets content
+/Assets/*
+
+# Whitelist: M3 project folder (all contents)
+!/Assets/_M3/
+!/Assets/_M3/**
+
+# Whitelist: Unity project settings
+!/Assets/Settings/
+!/Assets/Settings/**
+!/Assets/Settings.meta
+
+# Whitelist: meta files for whitelisted folders
+!/Assets/_M3.meta
+
+# ===========================
+# Project config to track
+# ===========================
+
+# Track Packages manifest (package list)
+!/Packages/
+
+# Track project settings
+!/ProjectSettings/
+
+# Track Documents
+!/Documents/
+
+# Track MCP/Claude/VSCode config
+!/.mcp.json
+!/.claude/
+!/.vscode/
+
+# But ignore .vscode user settings that are machine-specific
+.vscode/settings.json
+
+# Secrets -- never commit
+*.env
+credentials.json
