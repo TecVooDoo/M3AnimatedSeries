@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "ai-game-developer": {
+      "args": [
+        "port=23988",
+        "plugin-timeout=10000",
+        "client-transport=stdio",
+        "authorization=none"
+      ],
+      "command": "E:/Unity/M3AnimatedSeries/Library/mcp-server/win-x64/unity-mcp-server.exe"
+    }
+  }
+}

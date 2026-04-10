@@ -108,10 +108,13 @@ Documents/
 4. Facial expression layer (blendshapes or texture swap)
 5. Secondary motion (MagicaCloth 2 for cloth, BoingBones for hair/accessories)
 
-**Lip Sync Approach (TBD -- needs eval):**
-- uLipSync: real-time phoneme detection from audio, drives blendshapes
-- May need custom viseme blendshapes on Synty characters (EditorSculpt)
-- Alternative: texture-based face swap if blendshapes prove difficult on Synty mesh
+**Lip Sync Approach (uLipSync 3.1.5 -- APPROVED):**
+- Pre-bake voice AudioClips to BakedData assets (lipsync-bake MCP tool or Baked Data Generator window)
+- BakedData drives uLipSyncBlendShape via Timeline tracks (uLipSync Track + uLipSyncTimelineEvent binding)
+- One calibrated Profile per voice actor (male_01, female_01, etc.)
+- AnimationClip export available for integration with Animancer layering
+- May need custom viseme blendshapes on Synty characters (EditorSculpt, ENTRY-152)
+- Fallback: uLipSyncTexture (texture-based face swap) if blendshapes prove difficult on Synty mesh
 
 ---
 
@@ -132,18 +135,23 @@ Documents/
 | Animancer Pro | Code-driven animation | Yes |
 | Final IK | Character IK | Yes |
 | Master Audio 2024 | Audio system | Yes |
-| Dialogue System | Dialogue/conversation | Yes |
 | DOTween Pro | Tweening/transitions | Yes |
 | MagicaCloth 2 | Cloth simulation | Yes |
+| uLipSync 3.1.5 | Lip sync (ENTRY-328, Approved) | Yes |
+| com.tecvoodoo.mcp-tools | MCP tooling | Yes |
+| com.tecvoodoo.utilities | Shared utilities | Yes |
+| UniTask | Async/await | Yes |
 | UMotion Pro | Animation authoring | Recommended |
 | Feel | Camera shake, screen FX | Recommended |
 | Text Animator | Subtitles, titles | Recommended |
 | Retarget Pro | Animation retargeting | Recommended |
-| uLipSync | Lip sync (needs eval) | Candidate |
-| com.tecvoodoo.mcp-tools | MCP tooling | Yes |
-| com.tecvoodoo.utilities | Shared utilities | Yes |
-| com.tecvoodoo.games | Gameplay library | Yes |
-| UniTask | Async/await | Yes |
+| EditorSculpt | Viseme blendshape creation | Recommended |
+| Boing Kit | Hair/accessory spring physics | Recommended |
+
+**Removed from original list:**
+- Dialogue System -- M3 has no interactive dialogue; voice lines are pre-baked via uLipSync + Timeline
+- Ink Integration -- M3 is linear, not branching narrative
+- com.tecvoodoo.games -- M3 has no gameplay
 
 ---
 
