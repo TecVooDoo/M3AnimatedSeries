@@ -53,7 +53,7 @@ Characters (Synty Sidekick) + Animation + Lip Sync + Audio --> Timeline --> Rend
 
 ## MCP
 
-- Unity MCP via `com.ivanmurzak.unity.mcp` (OpenUPM). Port in `.claude/mcp.json` -- update after MCP install.
+- Unity MCP via `com.ivanmurzak.unity.mcp` (OpenUPM). Port 23988.
 - Custom tools via `com.tecvoodoo.mcp-tools` (local UPM package)
 - `script-execute` is the power tool (Roslyn). C# `<>` gets HTML-encoded -- use `typeof()` casts.
 - MCP disconnects during domain reload -- wait for auto-reconnect.
