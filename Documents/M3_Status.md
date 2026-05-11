@@ -1,21 +1,21 @@
 # M3AnimatedSeries -- Status
 
 **Purpose:** Animated series production -- adapt "Murder, Malady and Monsters" into animated episodes.
-**Last Updated:** April 9, 2026
+**Last Updated:** 2026-05-11
 
 ---
 
 ## Current State
 
-**Phase:** Initial Setup (Session 2)
+**Phase:** Post-crash recovery (Session 4)
 
-Script pipeline established. uLipSync evaluated and approved. MCP lip sync tools built. Synty Store Importer installed. Awaiting Tier 1 asset installs.
+Memory rebuilt after May 9 crash. iter-3.5 doc-system convention adopted in DevReference (Version + Revision History header, canonical pointer for Coding Standards). Unity is reopening on 6000.3.15f1. MCP plugin upgrade 0.66.1 -> 0.72 is in flight. Outstanding code/config work from Sessions 2-3 (manifest bump to 0.66.1, MCP HTTP transport, Animancer/Timeflow/ALINE/TextAnimator embedded UPM, Synty character prefabs) is being landed in a single fresh-session commit.
 
 **Next session priorities:**
-- Install Tier 1 assets (Animancer Pro, Final IK, MagicaCloth 2, Master Audio, DOTween Pro) -- Animancer FIRST (FBX catalog scan)
-- Import Synty SidekickCharacters via Store Importer
-- Test uLipSync with Synty characters (check for viseme blendshapes)
-- First set import from SetDesign (Vertex Lab)
+- Complete MCP 0.66.1 -> 0.72 upgrade per `Canonical/MCP_ConnectionBrief.md` validated recipe (verify whether the `.meta`-stub problem reproduces on this jump -- M3 is the next fleet data point).
+- Verify console is clean post-upgrade and `npx unity-mcp-cli run-tool tool-list` shows expected TMCP groups.
+- Resume Tier 3 work: test uLipSync with Synty SidekickCharacters (viseme blendshapes question).
+- First set import from SetDesign (Vertex Lab).
 
 ---
 
@@ -28,6 +28,18 @@ Script pipeline established. uLipSync evaluated and approved. MCP lip sync tools
 ---
 
 ## Session Log
+
+### Session 4 -- 2026-05-11
+- Post-crash recovery pass. Rebuilt Claude memory at `C:\Users\steph\.claude\projects\e--Unity-M3AnimatedSeries\memory\` per iter-3.5 canonical adoption: 8 files (MEMORY.md index + user_profile, project_crash_recovery, feedback_push_permission, plus reference pointers for coding standards, universal workflow, MCP brief, M3 documents map, Sandbox AssetLog).
+- Adopted PerProject_DocSystem v1.1 mandatory convention on `M3_DevReference.md`: added `Version` + `Revision History` table; slimmed Coding Standards block to a canonical pointer plus M3-specific deltas (no gameplay patterns, animation-first architecture, renderer/recorder latitude).
+- Audited outstanding pre-recovery state: M3_DevReference.md and M3_Status.md carried unpushed Session 2-3 edits (Refactor Guidelines, MCP HTTP transport pointer, Juicy Actions for Feel, Timeflow upgrade, expanded Installed Assets table); manifest.json bumped MCP 0.63.3 -> 0.66.1 and dropped the three MCP sub-packages; `.mcp.json` / `.claude/mcp.json` synced with ai-game-developer / ElevenLabs / blender; embedded UPM packages (Animancer, ALINE, Timeflow, Text Animator) and new `Assets/_M3/Characters/{Prefabs,SKCCModels,Animators}` plus `Audio/Dialogue`, `Scripts/LipSync` folders untracked.
+- Standing permission granted: push to `origin/master` without per-push confirmation. Saved as `feedback_push_permission.md`.
+- Open question carried forward: does the MCP `.meta`-stub problem reproduce on the 0.66.1 -> 0.72 jump? M3 is the next fleet data point per `MCP_ConnectionBrief.md`.
+
+### Session 3 -- April 27, 2026
+- Migrated MCP transport from `stdio` to `streamableHttp` (port 23988). Verified connected, ping/scene-list/tool-list (141 tools) all pass. One server process parented to Unity.exe, no bind errors.
+- Synced `.mcp.json` and `.claude/mcp.json` so both contain `ai-game-developer`, `ElevenLabs`, and `blender`.
+- Updated M3_DevReference.md MCP section with transport + pointer to canonical brief at `E:\Unity\Sandbox\Documents\MCP_ConnectionBrief.md`.
 
 ### Session 2 -- April 9, 2026
 - Evaluated uLipSync 3.1.5 (ENTRY-328 in Sandbox AssetLog) -- **Approved, Recommended**
@@ -63,10 +75,57 @@ Script pipeline established. uLipSync evaluated and approved. MCP lip sync tools
 
 ## Installed Assets
 
-| Asset | Source | Status |
-|-------|--------|--------|
-| uLipSync 3.1.5 | GitHub (file: ref) | Installed, evaluated (ENTRY-328) |
-| Synty Store Importer | GitHub | Installed (editor tool) |
+| Asset | Version | Source | Notes |
+|-------|---------|--------|-------|
+| **Core Animation** | | | |
+| Animancer Pro | 8.3.1 | Kybernetik (Custom UPM) | Code-driven animation |
+| Final IK | 2.4 | Asset Store | FBBIK, LookAt, Aim |
+| UMotion Pro | 1.29 | Asset Store | In-Unity animation authoring |
+| Retarget Pro | 4.2.1 | Asset Store | Animation retargeting |
+| Body Poser | 1.2 | Asset Store | Scene blocking poses |
+| Animation Path Visualizer | 2.0.0 | Asset Store | Editor QoL |
+| **Lip Sync** | | | |
+| uLipSync | 3.1.5 | GitHub (Local) | ENTRY-328, MCP tools built |
+| EditorSculpt | 1.70 | Asset Store | Viseme blendshape creation |
+| **Audio** | | | |
+| Master Audio 2024 | 1.0.4 | Asset Store | Full audio system |
+| Audio Preview Tool | 1.1.0 | Asset Store | Editor QoL |
+| **Sequencing / Tweening** | | | |
+| Timeflow | 1.10.1 | Axon Genesis (Custom UPM) | Procedural animation engine |
+| DOTween Pro | 1.0.410 | Asset Store | Universal tweening |
+| Juicy Actions | 1.0.3 | Asset Store | Game feel/juice (replaces Feel) |
+| Default Playables | 2.0 | Asset Store | Timeline extension tracks |
+| **Physics / Simulation** | | | |
+| MagicaCloth 2 | 2.18.1 | Asset Store | Cloth simulation |
+| Boing Kit | 1.2 | Asset Store | Hair/accessory spring physics |
+| **Text / UI** | | | |
+| Text Animator | 3.5.1 | Febucci (Custom UPM) | Subtitles, titles, credits |
+| Markdown for Unity | 1.0.0 | Asset Store | Editor QoL |
+| **Characters / Art** | | | |
+| Synty SidekickCharacters | -- | Synty Store | Base for all M3 characters |
+| Synty PolygonParticleFX | -- | Synty Store | Synty-style particles |
+| Synty Animations (all) | -- | Synty Store | Sidekick + generic rig clips |
+| Kevin Iglesias Animations | -- | Asset Store | Basic Motions, Human Crafting |
+| Synty Store Importer | -- | GitHub | Editor tool (gitignored) |
+| **Editor Tools** | | | |
+| ALINE | 1.7.9 | Asset Store | Debug drawing |
+| vFolders 2 | 2.1.14 | Asset Store | Project window organization |
+| vHierarchy 2 | 2.1.8 | Asset Store | Hierarchy window organization |
+| Wingman | 1.3.0 | Asset Store | Inspector enhancement |
+| Ultimate Preview Window | 1.3.3 | Asset Store | Asset preview |
+| **TecVooDoo Packages** | | | |
+| com.tecvoodoo.mcp-tools | 1.8.0 | Local UPM | MCP tooling (215 tools) |
+| com.tecvoodoo.utilities | 1.2.0 | Local UPM | Shared utilities |
+| com.tecvoodoo.games | 1.3.0 | Local UPM | Gameplay library |
+| **Unity Packages** | | | |
+| Timeline | 1.8.12 | Unity | Episode sequencing |
+| Cinemachine | 3.1.6 | Unity | Camera choreography |
+| Animation Rigging | 1.4.1 | Unity | Constraint-based IK |
+| ProBuilder | 6.0.9 | Unity | Mesh editing |
+| Addressables | 2.9.1 | Unity | Asset management |
+| AI Navigation | 2.0.12 | Unity | NavMesh (if needed) |
+| UniTask | 2.5.10 | Cysharp | Async/await |
+| R3 | 1.3.0 | Cysharp (NuGet) | Reactive extensions |
 
 ---
 
@@ -79,17 +138,17 @@ Script pipeline established. uLipSync evaluated and approved. MCP lip sync tools
 
 ---
 
-## Asset Install Plan (Tier 1 -- Next Session)
+## Asset Install Status
 
-Install order matters. Follow this sequence:
+**Tier 1 and Tier 2: COMPLETE.** All core and recommended assets installed.
 
-1. **Animancer Pro** -- FIRST (triggers FBX catalog scan on all 3D assets)
-2. **DOTween Pro** -- requires TextMesh Pro (should already be installed)
-3. **Final IK** -- after Animancer
-4. **Master Audio 2024** -- requires Addressables (install Addressables first)
-5. **MagicaCloth 2** -- requires SkinnedMeshRenderer (after character import)
-6. **Synty SidekickCharacters** -- via Store Importer (after Animancer)
+**Notes:**
+- Juicy Actions replaces Feel (Feel has stability issues across projects). TMCP tools built for both.
+- Timeflow complements Timeline: Timeline = episode sequencer (clips, tracks, uLipSync), Timeflow = procedural layer (tweens, easing, ambient animations, property binding, audio-reactive). Timeflow can follow PlayableDirector.
+- Synty animations: some clips are sidekick-specific, others target generic Synty rig. May need Retarget Pro for cross-rig clips.
+- Kevin Iglesias clips (Basic Motions, Human Crafting) are Mixamo-compatible humanoid -- should retarget to Synty cleanly.
 
-## Asset Install Plan (Tier 2)
-
-- Feel, Text Animator, UMotion Pro, Retarget Pro, EditorSculpt, Boing Kit, Default Playables
+**Next steps:**
+- Test uLipSync with Synty SidekickCharacters (check for viseme blendshapes)
+- First set import from SetDesign (Vertex Lab)
+- Character prefab pipeline (Synty modular mesh configuration per character)

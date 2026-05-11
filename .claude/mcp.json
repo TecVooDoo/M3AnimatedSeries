@@ -1,19 +1,23 @@
 {
   "mcpServers": {
     "ai-game-developer": {
-      "command": "E:/Unity/M3AnimatedSeries/Library/mcp-server/win-x64/unity-mcp-server.exe",
-      "args": [
-        "port=23988",
-        "plugin-timeout=10000",
-        "client-transport=stdio",
-        "authorization=none"
-      ]
+      "type": "http",
+      "url": "http://localhost:23988"
     },
     "blender": {
       "command": "C:/Users/steph/AppData/Local/Microsoft/WinGet/Packages/astral-sh.uv_Microsoft.Winget.Source_8wekyb3d8bbwe/uvx.exe",
       "args": ["blender-mcp"],
       "env": {
         "DISABLE_TELEMETRY": "true"
+      }
+    },
+    "ElevenLabs": {
+      "command": "uvx",
+      "args": [
+        "elevenlabs-mcp"
+      ],
+      "env": {
+        "ELEVENLABS_API_KEY": "sk_1c97a358cce085464e312bb8d0bcfd8782f2aca5cb92c233"
       }
     }
   }

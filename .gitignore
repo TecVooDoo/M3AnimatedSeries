@@ -65,6 +65,13 @@ sysinfo.txt
 # Track Packages manifest (package list)
 !/Packages/
 
+# Third-party embedded UPM packages (paid Asset Store / custom UPM)
+# Tracked via manifest.json file: refs, NOT inline in the repo
+/Packages/com.kybernetik.animancer/
+/Packages/com.axongenesis.timeflow/
+/Packages/com.febucci.text-animator-unity/
+/Packages/com.arongranberg.aline/
+
 # Track project settings
 !/ProjectSettings/
 

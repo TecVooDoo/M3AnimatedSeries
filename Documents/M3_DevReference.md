@@ -1,7 +1,16 @@
 # M3AnimatedSeries -- Development Reference
 
 **Purpose:** Stable reference for M3 architecture, conventions, production pipeline, and asset candidates.
-**Last Updated:** April 9, 2026
+**Last Updated:** 2026-05-11
+**Version:** 1.1
+
+## Revision History
+
+| Date | Version | Sections affected | Change |
+|------|---------|-------------------|--------|
+| 2026-04-09 | 1.0 | (initial) | Initial creation. Project purpose, folder structure, coding standards, character pipeline, MCP, packages, asset candidates, session workflow. |
+| 2026-04-27 | 1.0 | Refactor Guidelines (new), MCP, Packages, Asset Candidates, Session Workflow (new) | Session 2-3 uncommitted edits: added Refactor Guidelines, pointed MCP at the canonical brief and noted streamableHttp/23988, swapped Feel for Juicy Actions, upgraded Timeflow row, added explicit Session Workflow. Header date stayed stale until 2026-05-11 cleanup. |
+| 2026-05-11 | 1.1 | Header, Coding Standards | Added Version + Revision History header per PerProject_DocSystem v1.1 mandatory convention. Replaced inline Coding Standards bullets with canonical pointer to `Canonical/TecVooDoo_CodingStandards.md` (kept project-specific deltas only). |
 
 ---
 
@@ -81,14 +90,39 @@ Documents/
 
 ## Coding Standards
 
-- No `var` keyword -- explicit types always
-- No per-frame allocations/LINQ -- cache, pool, reuse
-- ASCII-only in code and identifiers
-- `sealed` on MonoBehaviours unless inheritance intended
-- Prefer async/await (UniTask) over coroutines
-- Prefer interfaces and generics -- decouple systems, reduce duplication
-- Extract by responsibility not line count
-- Vanilla SO architecture -- GameEvent/GameEventListener for events (NOT SOAP)
+**Universal TecVooDoo coding standards: see `E:\Unity\Sandbox\Documents\Canonical\TecVooDoo_CodingStandards.md` (canonical).** That file is the single source of truth across all TecVooDoo Unity projects. When it changes, the change shows in its Revision History header.
+
+### M3-Specific
+
+M3 is a linear animated-series production, not a game. So in addition to the universal rules:
+
+- **No gameplay patterns.** No state machines for player input, no scene-load orchestration, no save systems. Episodes are linear Timeline playback.
+- **Animation-first architecture.** Cinematic playback (Animancer + Timeline + Cinemachine) is the spine; runtime systems exist only to serve that.
+- **No Dialogue System / Ink / Adventure Creator** -- voice lines are pre-baked AudioClips driven by uLipSync via Timeline. No branching narrative runtime.
+- **Renderer/Recorder side has more latitude** -- one-shot offline workflows can do things that would be unacceptable in per-frame runtime code (allocations, LINQ, blocking calls).
+
+---
+
+## Refactor Guidelines
+
+Carried over from the HOK refactor postmortem (DLYH was over-aggressive — had to refactor the refactor). The intent: avoid line-count targets, prefer cohesion, justify every move.
+
+**Priorities (in order):**
+
+1. **SOLID** — single responsibility, but don't split things that belong together. A script that does one thing cohesively can be longer than another script that's poorly factored.
+2. **Memory efficiency** — no allocations in hot paths (Update / FixedUpdate / OnTriggerStay). Reuse collections, cache `GetComponent` results, avoid LINQ in tight loops.
+3. **UniTask over coroutines** when the coroutine is non-trivial. Simple delay-then-fire coroutines are fine; long-running async chains warrant UniTask.
+4. **Interfaces preferred, generics welcome** — easier to test, easier to swap.
+5. **Grouping related things together, not splitting for line count.** Folder/file organization matters too, not just per-script.
+
+**Don't refactor for the sake of refactoring** — needs a clear reason to change or stay. Every change needs justification: why move, why stay.
+
+**Line count is a smell, not a target:** 3000 lines is too much, but 1500 doing one job well is fine. The DLYH targets (1000-1200) came from Claude Desktop conversation limits, not from code quality.
+
+**When auditing for refactor:**
+- Look at folder organization first — sibling files should belong together.
+- Group by feature, not by type (e.g. keep related scripts for one system in a feature folder, not split across generic `Components/` or `Models/` folders).
+- If a class has two clear responsibilities and they don't depend on each other, split. If they constantly call each other or share state, leave them.
 
 ---
 
@@ -120,9 +154,10 @@ Documents/
 
 ## MCP
 
-- Unity MCP via `com.ivanmurzak.unity.mcp` (OpenUPM)
+- Unity MCP via `com.ivanmurzak.unity.mcp` (OpenUPM), `streamableHttp` transport on `http://localhost:23988`
 - Custom tools via `com.tecvoodoo.mcp-tools` (local UPM package)
 - TMCP tools available for: Final IK, Cinemachine, Master Audio, Dialogue System, DOTween, Feel, Timeline, Animation Rigging, Text Animator
+- Migration / verification / troubleshooting: `E:\Unity\Sandbox\Documents\MCP_ConnectionBrief.md`
 
 ---
 
@@ -142,11 +177,12 @@ Documents/
 | com.tecvoodoo.utilities | Shared utilities | Yes |
 | UniTask | Async/await | Yes |
 | UMotion Pro | Animation authoring | Recommended |
-| Feel | Camera shake, screen FX | Recommended |
+| Juicy Actions 1.0.3 | Screen FX, shake, spring physics, juice | Recommended |
 | Text Animator | Subtitles, titles | Recommended |
 | Retarget Pro | Animation retargeting | Recommended |
 | EditorSculpt | Viseme blendshape creation | Recommended |
 | Boing Kit | Hair/accessory spring physics | Recommended |
+| Timeflow 1.10.1 | Procedural animation (ENTRY-100, Approved) | Recommended |
 
 **Removed from original list:**
 - Dialogue System -- M3 has no interactive dialogue; voice lines are pre-baked via uLipSync + Timeline
@@ -218,7 +254,7 @@ Tools and assets from the Sandbox AssetLog (and external sources) relevant to M3
 | 251 | Adventure Creator 1.85.5 | Approved, Recommended | 137 action types, ActionList cutscene system, Timeline integration. Full episode director candidate. |
 | 273 | Naninovel 1.21 | Approved, Recommended | Script-driven sequencing, .nani format, ControlTimeline command. |
 | 316 | Juicy Actions 1.0.3 | Approved, Recommended | Async action sequencing for procedural cinematics. |
-| 100 | Timeflow Animation System | Conditional | Alternative animation sequencer. |
+| 100 | Timeflow 1.10.1 (Axon Genesis) | Approved, Recommended | Procedural animation engine. Complements Timeline -- tweens, easing, property binding, audio-reactive, batch animation. TMCP tools built. |
 
 ### Rendering / Post-Processing
 
@@ -272,3 +308,25 @@ Tools and assets from the Sandbox AssetLog (and external sources) relevant to M3
 |-------|-------|---------|-------|
 | 291 | SidekickCharacters (Synty) | Conditional | **Core.** Humanoid rig, IK bones, attachment bones. Base for all M3 characters. |
 | 265 | Synty Store Importer | Approved | Synty import pipeline tool. |
+
+---
+
+## Session Workflow
+
+Every working session is bracketed by two bookends. Skipping either one degrades context for the next session.
+
+### Session Open
+
+1. **Read `M3_Status.md`.** Current state + last ~2 sessions live there.
+2. **Verify Unity is reachable via MCP.** If the Editor isn't running, ask before doing anything that needs it.
+3. **Check the console** -- 0 errors before starting work. Address any new errors before proceeding.
+4. **Note open carryovers** in `M3_Status.md` -- these are pre-approved drops from prior sessions.
+
+### Session Close
+
+1. **Update `M3_Status.md`** with a new session entry at the top of the session list (newest-first within the recent block).
+2. **Archive older sessions when `M3_Status.md` grows past ~2 sessions in the recent block** -- create `M3_StatusArchive.md` when needed.
+3. **Update the Next list** in `M3_Status.md` to reflect what's left after this session.
+4. **Commit and push.** Stage the working changes, write a focused commit message summarizing the session's work (the "why" -- not the diff), and push to the GitHub remote (`origin/main` on `https://github.com/TecVooDoo/M3AnimatedSeries`). The repo is the source of truth between machines and across time -- skipping the push is how work gets lost or duplicated.
+
+If there are no code or doc changes worth committing (e.g. the session was purely investigation / playtest with no changes), still update `M3_Status.md` with the session notes and commit + push that doc-only change.
