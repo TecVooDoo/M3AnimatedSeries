@@ -12,10 +12,9 @@
 Memory rebuilt after May 9 crash. iter-3.5 doc-system convention adopted in DevReference (Version + Revision History header, canonical pointer for Coding Standards). Unity is reopening on 6000.3.15f1. MCP plugin upgrade 0.66.1 -> 0.72 is in flight. Outstanding code/config work from Sessions 2-3 (manifest bump to 0.66.1, MCP HTTP transport, Animancer/Timeflow/ALINE/TextAnimator embedded UPM, Synty character prefabs) is being landed in a single fresh-session commit.
 
 **Next session priorities:**
-- Complete MCP 0.66.1 -> 0.72 upgrade per `Canonical/MCP_ConnectionBrief.md` validated recipe (verify whether the `.meta`-stub problem reproduces on this jump -- M3 is the next fleet data point).
-- Verify console is clean post-upgrade and `npx unity-mcp-cli run-tool tool-list` shows expected TMCP groups.
 - Resume Tier 3 work: test uLipSync with Synty SidekickCharacters (viseme blendshapes question).
 - First set import from SetDesign (Vertex Lab).
+- Audit / remove placeholder `Assets/_M3/Audio/Music/NewMonoBehaviourScript.cs` if it was accidental (Unity-default name suggests right-click "Create > MonoBehaviour Script" by mistake).
 
 ---
 
@@ -30,7 +29,9 @@ Memory rebuilt after May 9 crash. iter-3.5 doc-system convention adopted in DevR
 ## Session Log
 
 ### Session 4 -- 2026-05-11
-- Post-crash recovery pass. Rebuilt Claude memory at `C:\Users\steph\.claude\projects\e--Unity-M3AnimatedSeries\memory\` per iter-3.5 canonical adoption: 8 files (MEMORY.md index + user_profile, project_crash_recovery, feedback_push_permission, plus reference pointers for coding standards, universal workflow, MCP brief, M3 documents map, Sandbox AssetLog).
+- **MCP 0.66.1 -> 0.72.0 upgrade landed clean** (commit 47b1b78). Direct-jump path, fourth fleet verification after HOK / SS / GRIMMORPG. No `.meta`-stub regression (that bug is specific to the legacy 0.66.1 -> 0.69.0 resolver path). 138 tools registered, `scene-list-opened` returns SampleScene cleanly. Unity simultaneously bumped 6000.3.11f1 -> 6000.3.15f1. Sub-packages restored at animation 1.1.38 / particlesystem 1.0.64 / probuilder 1.0.76.
+- Updated `Canonical/MCP_ConnectionBrief.md` fleet table with M3's verified-working row (left unstaged in Sandbox; next Sandbox-session bookend will push).
+- Post-crash recovery pass. Rebuilt Claude memory at `C:\Users\steph\.claude\projects\e--Unity-M3AnimatedSeries\memory\` per iter-3.5 canonical adoption: 9 files now (MEMORY.md index + user_profile, project_crash_recovery, feedback_push_permission, feedback_cross_project_commit_ownership, plus reference pointers for coding standards, universal workflow, MCP brief, M3 documents map, Sandbox AssetLog).
 - Adopted PerProject_DocSystem v1.1 mandatory convention on `M3_DevReference.md`: added `Version` + `Revision History` table; slimmed Coding Standards block to a canonical pointer plus M3-specific deltas (no gameplay patterns, animation-first architecture, renderer/recorder latitude).
 - Audited outstanding pre-recovery state: M3_DevReference.md and M3_Status.md carried unpushed Session 2-3 edits (Refactor Guidelines, MCP HTTP transport pointer, Juicy Actions for Feel, Timeflow upgrade, expanded Installed Assets table); manifest.json bumped MCP 0.63.3 -> 0.66.1 and dropped the three MCP sub-packages; `.mcp.json` / `.claude/mcp.json` synced with ai-game-developer / ElevenLabs / blender; embedded UPM packages (Animancer, ALINE, Timeflow, Text Animator) and new `Assets/_M3/Characters/{Prefabs,SKCCModels,Animators}` plus `Audio/Dialogue`, `Scripts/LipSync` folders untracked.
 - Standing permission granted: push to `origin/master` without per-push confirmation. Saved as `feedback_push_permission.md`.
