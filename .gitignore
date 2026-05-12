@@ -18,6 +18,7 @@
 .vs/
 *.csproj
 *.sln
+*.slnx
 *.suo
 *.tmp
 *.user
